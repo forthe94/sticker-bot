@@ -4,7 +4,7 @@ from src.webapp.middleware import log_errors_to_tg
 
 app = FastAPI()
 
-app.add_middleware(log_errors_to_tg)
+app.middleware("HTTP")(log_errors_to_tg)
 
 
 @app.get("/")
