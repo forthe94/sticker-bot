@@ -1,0 +1,83 @@
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        additional_dependencies: [ 'click==8.0.4' ]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+    - id: check-docstring-first
+      stages:
+      - commit
+      - push
+    - id: check-merge-conflict
+      stages:
+      - push
+    - id: trailing-whitespace
+      stages:
+      - commit
+      - push
+    - id: end-of-file-fixer
+      stages:
+      - commit
+      - push
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.6.0
+    hooks:
+    - id: autopep8
+      stages:
+        - commit
+        - push
+      args:
+        - --max-line-length=120
+        - --diff
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.2.3
+    hooks:
+    - id: add-trailing-comma
+      stages:
+        - commit
+        - push
+  - repo: https://github.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        stages:
+          - commit
+          - push
+        additional_dependencies:
+          - flake8-absolute-import
+          - flake8-mock
+          - flake8-mutable
+        args:
+          - --max-line-length=120
+          - --ignore=E203,ANN101,ANN102,W503
+          - --per-file-ignores=__init__.py:F401
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        stages:
+          - commit
+          - push
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.3.3
+    hooks:
+    - id: pycln
+      stages:
+        - commit
+        - push
+      args: [ ., -a]
+  - repo: https://github.com/flakeheaven/flakeheaven
+    rev: 2.1.3
+    hooks:
+    - id: flakeheaven
+      stages:
+        - commit
+        - push
+      additional_dependencies:
+        - flake8-simplify==0.19.3
+        - flake8-comprehensions==3.10.0
+        - flake8-annotations==2.9.0
