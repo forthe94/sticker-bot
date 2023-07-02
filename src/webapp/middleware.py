@@ -5,11 +5,9 @@ from fastapi import Request, Response
 
 from src import config
 from src.bot.bot import sticker_bot
-from src.webapp.app import app
 
 
-@app.middleware("http")
-async def add_process_time_header(
+async def log_errors_to_tg(
     request: Request,
     call_next: Callable[[Request], Awaitable[Response]],
 ) -> Response:
