@@ -8,12 +8,13 @@ packages = [{include = "sticker_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aiogram = "^2.25.1"
 loguru = "^0.7.0"
 fastapi = "^0.99.0"
 pillow = "^10.0.0"
 uvicorn = "^0.22.0"
 pydantic = "1.10.10"
+python-dotenv = "^1.0.0"
+aiogram = "3.0.0b7"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
@@ -24,3 +25,16 @@ types-pillow = "^9.5.0.5"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+plugins = [
+  "pydantic.mypy"
+]
+python_version = "3.11"
+strict = true  # https://github.com/python/mypy/issues/11401
+ignore_missing_imports = true
+show_error_codes = true
+allow_untyped_decorators = true
+disallow_subclassing_any = false
+implicit_reexport = true
+exclude = ["venv", ".cache", "test_[a-z_]*.py", "conftest.py", "migrations", "fixtures.py"]

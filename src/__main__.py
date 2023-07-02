@@ -1,6 +1,6 @@
 import uvicorn
 
-from src.app import app
+from src.webapp.app import app
 
 
 def main():

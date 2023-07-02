@@ -1,20 +1,34 @@
 [[package]]
-name = "aiogram"
-version = "2.25.1"
-description = "Is a pretty simple and fully asynchronous framework for Telegram Bot API"
+name = "aiofiles"
+version = "23.1.0"
+description = "File support for asyncio."
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.7,<4.0"
+
+[[package]]
+name = "aiogram"
+version = "3.0.0b7"
+description = "Modern and fully asynchronous framework for Telegram Bot API"
+category = "main"
+optional = false
+python-versions = ">=3.8"
 
 [package.dependencies]
-aiohttp = ">=3.8.0,<3.9.0"
-Babel = ">=2.9.1,<2.10.0"
-certifi = ">=2021.10.8"
-magic-filter = ">=1.0.9"
+aiofiles = ">=23.1.0,<23.2.0"
+aiohttp = ">=3.8.4,<3.9.0"
+certifi = ">=2022.9.24"
+magic-filter = ">=1.0.9,<1.1.0"
+pydantic = ">=1.10.4,<1.11.0"
 
 [package.extras]
-fast = ["ujson (>=1.35)", "uvloop (>=0.16.0,<0.17.0)"]
-proxy = ["aiohttp-socks (>=0.5.3,<0.6.0)"]
+dev = ["black (>=23.1,<24.0)", "isort (>=5.11,<6.0)", "mypy (>=1.0.0,<1.1.0)", "packaging (>=23.0,<24.0)", "pre-commit (>=3.0.4,<3.1.0)", "ruff (>=0.0.246,<0.1.0)", "toml (>=0.10.2,<0.11.0)", "towncrier (>=22.12.0,<22.13.0)", "typing-extensions (>=4.4.0,<4.5.0)"]
+docs = ["furo (>=2022.9.29,<2022.10.0)", "markdown-include (>=0.7.0,<0.8.0)", "pygments (>=2.13.0,<2.14.0)", "pygments (>=2.4,<3.0)", "pymdown-extensions (>=9.6,<10.0)", "sphinx (>=5.2.3,<5.3.0)", "sphinx-autobuild (>=2021.3.14,<2021.4.0)", "sphinx-copybutton (>=0.5.0,<0.6.0)", "sphinx-intl (>=2.0.1,<2.1.0)", "sphinx-prompt (>=1.5.0,<1.6.0)", "sphinx-substitution-extensions (>=2022.2.16,<2022.3.0)", "sphinxcontrib-towncrier (>=0.3.1a3,<0.4.0)", "towncrier (>=22.8.0,<22.9.0)"]
+fast = ["uvloop (>=0.17.0)"]
+i18n = ["babel (>=2.11.0,<2.12.0)"]
+proxy = ["aiohttp-socks (>=0.7.1,<0.8.0)"]
+redis = ["redis (>=4.5.1,<4.6.0)"]
+test = ["aresponses (>=2.1.6,<2.2.0)", "pytest (>=7.2.1,<7.3.0)", "pytest-aiohttp (>=1.0.4,<1.1.0)", "pytest-asyncio (>=0.20.3,<0.21.0)", "pytest-cov (>=4.0.0,<4.1.0)", "pytest-html (>=3.2.0,<3.3.0)", "pytest-lazy-fixture (>=0.6.3,<0.7.0)", "pytest-mock (>=3.10.0,<3.11.0)", "pytest-mypy (>=0.10.0,<0.11.0)"]
 
 [[package]]
 name = "aiohttp"
@@ -86,17 +100,6 @@ dev = ["attrs[docs,tests]", "pre-commit"]
 docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier", "zope-interface"]
 tests = ["attrs[tests-no-zope]", "zope-interface"]
 tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
-
-[[package]]
-name = "babel"
-version = "2.9.1"
-description = "Internationalization utilities"
-category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-
-[package.dependencies]
-pytz = ">=2015.7"
 
 [[package]]
 name = "black"
@@ -372,12 +375,15 @@ dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
 
 [[package]]
-name = "pytz"
-version = "2023.3"
-description = "World timezone definitions, modern and historical"
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
+
+[package.extras]
+cli = ["click (>=5.0)"]
 
 [[package]]
 name = "pyyaml"
@@ -496,12 +502,16 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "23a12eb22a2b48562f15df46a86f2eb5e78c436d99164821ae5628318bc5e303"
+content-hash = "4487884a63dc9332aa94ce827a4f28a0c5ba1de85cf63b6f51eded7edf2d1156"
 
 [metadata.files]
+aiofiles = [
+    {file = "aiofiles-23.1.0-py3-none-any.whl", hash = "sha256:9312414ae06472eb6f1d163f555e466a23aed1c8f60c30cccf7121dba2e53eb2"},
+    {file = "aiofiles-23.1.0.tar.gz", hash = "sha256:edd247df9a19e0db16534d4baaf536d6609a43e1de5401d7a4c1c148753a1635"},
+]
 aiogram = [
-    {file = "aiogram-2.25.1-py3-none-any.whl", hash = "sha256:7bb770cd0459f1dbaea00578bf13fb2e6a1812f22adf94a988c11a7c0d5f33e1"},
-    {file = "aiogram-2.25.1.tar.gz", hash = "sha256:59ad78fc0ebbef1fd471c15778a4594b60117e0d7373bc2ce7bcd192074d527d"},
+    {file = "aiogram-3.0.0b7-py3-none-any.whl", hash = "sha256:9c2256bfd0a3f06dfee9cd077ac510eb967da62a529fbfb443c680539cdd1870"},
+    {file = "aiogram-3.0.0b7.tar.gz", hash = "sha256:683c9aafa477e42f54df427089db3d18e4db15a2520abb9da5c4305a02e7fd82"},
 ]
 aiohttp = [
     {file = "aiohttp-3.8.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5ce45967538fb747370308d3145aa68a074bdecb4f3a300869590f725ced69c1"},
@@ -607,10 +617,6 @@ async-timeout = [
 attrs = [
     {file = "attrs-23.1.0-py3-none-any.whl", hash = "sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04"},
     {file = "attrs-23.1.0.tar.gz", hash = "sha256:6279836d581513a26f1bf235f9acd333bc9115683f14f7e8fae46c98fc50e015"},
-]
-babel = [
-    {file = "Babel-2.9.1-py2.py3-none-any.whl", hash = "sha256:ab49e12b91d937cd11f0b67cb259a57ab4ad2b59ac7a3b41d6c06c0ac5b0def9"},
-    {file = "Babel-2.9.1.tar.gz", hash = "sha256:bc0c176f9f6a994582230df350aa6e05ba2ebe4b3ac317eab29d9be5d2768da0"},
 ]
 black = [
     {file = "black-23.3.0-cp310-cp310-macosx_10_16_arm64.whl", hash = "sha256:0945e13506be58bf7db93ee5853243eb368ace1c08a24c65ce108986eac65915"},
@@ -1062,9 +1068,9 @@ pydantic = [
     {file = "pydantic-1.10.10-py3-none-any.whl", hash = "sha256:a5939ec826f7faec434e2d406ff5e4eaf1716eb1f247d68cd3d0b3612f7b4c8a"},
     {file = "pydantic-1.10.10.tar.gz", hash = "sha256:3b8d5bd97886f9eb59260594207c9f57dce14a6f869c6ceea90188715d29921a"},
 ]
-pytz = [
-    {file = "pytz-2023.3-py2.py3-none-any.whl", hash = "sha256:a151b3abb88eda1d4e34a9814df37de2a80e301e68ba0fd856fb9b46bfbbbffb"},
-    {file = "pytz-2023.3.tar.gz", hash = "sha256:1d8ce29db189191fb55338ee6d0387d82ab59f3d00eac103412d64e0ebd0c588"},
+python-dotenv = [
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
 ]
 pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
