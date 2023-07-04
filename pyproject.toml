@@ -15,6 +15,7 @@ uvicorn = "^0.22.0"
 pydantic = "1.10.10"
 python-dotenv = "^1.0.0"
 aiogram = "3.0.0b7"
+isort = "^5.12.0"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
