@@ -1,11 +1,14 @@
+import os
+
 from aiogram import types
 from fastapi import FastAPI
 
 from src import config
 from src.bot.bot import dispatcher, requests_data, sticker_bot
+from src.webapp import schemas
 from src.webapp.middleware import log_errors_to_tg
 
-app = FastAPI()
+app = FastAPI(title="Stickerpack API")
 
 app.middleware("HTTP")(log_errors_to_tg)
 
@@ -17,7 +20,7 @@ async def on_startup():
         await sticker_bot.set_webhook(url=config.WEBHOOK_URL)
 
 
-@app.post(config.WEBHOOK_PATH)
+@app.post(config.WEBHOOK_PATH, include_in_schema=False)
 async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     # Dispatcher.set_current(dispatcher)
@@ -30,10 +33,34 @@ async def on_shutdown():
 
 
 @app.post("/sticker_pack")
-async def sticker_pack_request(data: dict):
-    token = data["token"]
-    requests_data[token] = "some_data"
-    return f"https://t.me/forthe_great_bot?start={token}"
+async def sticker_pack_request(
+    data: schemas.StickerPackRequest,
+) -> schemas.StickerPackResponse:
+    token = data.token
+    requests_data[token] = data
+    errors = []
+    static_files_on_server = os.listdir(config.STATIC_DIR)
+
+    for sticker in data.stickers:
+        for image in sticker.images + [sticker.background_img]:
+            if image not in static_files_on_server:
+                errors.append(
+                    schemas.ImageNotFoundError(
+                        description=image,
+                    ),
+                )
+    if errors:
+        success = False
+        deeplink = None
+    else:
+        success = True
+        deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+    resp = schemas.StickerPackResponse(
+        success=success,
+        bot_deeplink=deeplink,
+        errors=errors,
+    )
+    return resp
 
 
 @app.get("/")
