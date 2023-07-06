@@ -39,6 +39,7 @@ class StickerAmountExceededError(StickerPackRequestError):
 
 class StickerPackResponse(BaseModel):
     success: bool
+    first_req: bool = True
     bot_deeplink: str | None = Field(
         example="https://t.me/forthe_great_bot?start=<token_you_send>",
     )

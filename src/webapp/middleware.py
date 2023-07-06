@@ -3,8 +3,8 @@ from typing import Awaitable, Callable
 
 from fastapi import Request, Response
 
-from src import config
 from src.bot.bot import sticker_bot
+from src.webapp.admin import notify_admins
 
 
 async def log_errors_to_tg(
@@ -14,9 +14,8 @@ async def log_errors_to_tg(
     try:
         return await call_next(request)
     except Exception as e:
-        for admin in config.ADMIN_TGS:
-            await sticker_bot.send_message(
-                admin,
-                "".join(traceback.format_exception(e)),
-            )
+        await notify_admins(
+            "".join(traceback.format_exception(e)),
+            sticker_bot,
+        )
         raise

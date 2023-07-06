@@ -2,6 +2,7 @@ import os
 
 from aiogram import types
 from fastapi import FastAPI
+from loguru import logger
 
 from src import config
 from src.bot.bot import dispatcher, requests_data, sticker_bot
@@ -37,10 +38,19 @@ async def sticker_pack_request(
     data: schemas.StickerPackRequest,
 ) -> schemas.StickerPackResponse:
     token = data.token
-    requests_data[token] = data
+    deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+    if str(token) in requests_data:
+        return schemas.StickerPackResponse(
+            success=True,
+            first_req=False,
+            bot_deeplink=deeplink,
+        )
+    requests_data[str(token)] = data
+    requests_data.commit()
+
     errors = []
     static_files_on_server = os.listdir(config.STATIC_DIR)
-
+    logger.info("New stickerpack request {}", token)
     for sticker in data.stickers:
         for image in sticker.images + [sticker.background_img]:
             if image not in static_files_on_server:
@@ -55,6 +65,12 @@ async def sticker_pack_request(
     else:
         success = True
         deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+    logger.info(
+        "Response success:{}, deeplink:{}, errors:{}",
+        success,
+        deeplink,
+        errors,
+    )
     resp = schemas.StickerPackResponse(
         success=success,
         bot_deeplink=deeplink,

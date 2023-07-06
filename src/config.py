@@ -8,11 +8,11 @@ STATIC_DIR = PROJECT_ROOT / "static"
 dotenv.load_dotenv(PROJECT_ROOT / ".env", verbose=True)
 
 STICKER_BOT_TOKEN: str = os.getenv("STICKER_BOT_TOKEN", "")
-STICKER_BOT_NAME: str = os.getenv("STICKER_BOT_NAME", "forthe_great_bot")
+STICKER_BOT_NAME: str = os.getenv("STICKER_BOT_NAME", "botter_forther_bot")
 ADMIN_TGS: list[int] = list(map(int, os.getenv("ADMIN_TGS", "259966720").split(",")))
 WEBHOOK_HOST: str = os.getenv(
     "WEBHOOK_HOST",
-    "https://2855-5-152-51-131.ngrok-free.app",
+    "https://3146-5-152-51-131.ngrok-free.app",
 )
 WEBHOOK_PATH = f"/bot/{STICKER_BOT_TOKEN}"
 WEBHOOK_URL = WEBHOOK_HOST + WEBHOOK_PATH
