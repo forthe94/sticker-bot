@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  app:
+    build:
+      context: .
+    container_name: app
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    command: |
+      bash -c "python3 -m src api"
