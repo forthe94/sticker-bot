@@ -21,3 +21,5 @@ hhfiles
 profile.*
 *.pickle
 *.db
+data/*
+data
