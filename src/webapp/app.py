@@ -1,7 +1,7 @@
 import os
 
 from aiogram import types
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 from loguru import logger
 
 from src import config
@@ -9,10 +9,9 @@ from src.bot.bot import dispatcher, requests_data, sticker_bot
 from src.webapp import schemas
 from src.webapp.middleware import log_errors_to_tg
 
-app = FastAPI(title="Stickerpack API")
+app = FastAPI(title="Stickerpack API", root_path="/api/v1")
 
 app.middleware("HTTP")(log_errors_to_tg)
-router = APIRouter(prefix="/api/v1", tags=["api_v1"])
 
 
 @app.on_event("startup")
@@ -34,7 +33,7 @@ async def on_shutdown():
     await sticker_bot.session.close()
 
 
-@router.post("/sticker_pack")
+@app.post("/sticker_pack")
 async def sticker_pack_request(
     data: schemas.StickerPackRequest,
 ) -> schemas.StickerPackResponse:
@@ -88,6 +87,3 @@ async def root():
 @app.get("/exception_test")
 async def error():
     raise Exception("Very bad things happened")
-
-
-app.include_router(router)
