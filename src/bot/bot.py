@@ -39,7 +39,6 @@ dispatcher.message.middleware(ErrorLogMiddleware())
 async def start(message: types.Message, command: CommandObject) -> None:
     ans_mes = await message.answer("Стикеры создаются!")
     try:
-
         if command.args is None:
             await notify_admins("Empty command args", sticker_bot)
             return
