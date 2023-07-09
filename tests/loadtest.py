@@ -14,7 +14,8 @@ async def main():
         )
         sticker = create_sticker(sticker)
         print(idx, sticker[0])
-    print("elapsed %s", start_time - time.monotonic())
+    elapsed = round(time.monotonic() - start_time, 2)
+    print(f"elapsed {elapsed}")
 
 
 if __name__ == "__main__":
