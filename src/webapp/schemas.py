@@ -1,8 +1,11 @@
+import dataclasses
+import datetime
 import uuid
 from enum import Enum
 
 from pydantic.fields import Field
 from pydantic.main import BaseModel
+from pydantic.types import conlist
 
 
 class StickerParams(BaseModel):
@@ -16,7 +19,7 @@ class StickerPackRequest(BaseModel):
         description="Stickerpack name",
         example="My beautiful stickerpack",
     )
-    stickers: list[StickerParams]
+    stickers: conlist(StickerParams, max_items=120)  # type: ignore
 
 
 class ErrorCode(Enum):
@@ -47,3 +50,10 @@ class StickerPackResponse(BaseModel):
         default_factory=list,
         description="Erros description",
     )
+
+
+@dataclasses.dataclass
+class SavedRequestData:
+    data: StickerPackRequest
+    user_id: str | None = None
+    created_at: datetime.datetime = datetime.datetime.utcnow()

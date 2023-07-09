@@ -46,7 +46,8 @@ async def sticker_pack_request(
             first_req=False,
             bot_deeplink=deeplink,
         )
-    requests_data[str(token)] = data
+    req_data = schemas.SavedRequestData(data)
+    requests_data[str(token)] = req_data
     requests_data.commit()
 
     errors = []
