@@ -39,6 +39,25 @@ dispatcher.message.middleware(ErrorLogMiddleware())
 @dispatcher.message(CommandStart())
 async def start(message: types.Message, command: CommandObject) -> None:
     try:
+        if command.args is None:
+            await message.answer(
+                "Этот праздник очень важен для сотрудников ритейла, "
+                "поэтому мы предлагаем вам создать собственный набор стикеров и "
+                "поздравить коллег и друзей с праздником! "
+                "Это легко: просто перейдите на сайт и создайте свой стикерпак!",
+                reply_markup=types.InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        [
+                            types.InlineKeyboardButton(
+                                text="Перейти",
+                                url="https://vps-retailday.socialcraft.ru/",
+                            ),
+                        ],
+                    ],
+                ),
+            )
+            return
+
         token_no_underlines = str(requests_data[command.args].data.token).replace(
             "-",
             "",
@@ -73,25 +92,6 @@ async def start(message: types.Message, command: CommandObject) -> None:
             "Ваш набор стикеров уже создан, но нужно подождать ещё совсем немного, "
             "и вашим близким будет приятно ваше внимание 🔥",
         )
-
-        if command.args is None:
-            await message.answer(
-                "Этот праздник очень важен для сотрудников ритейла, "
-                "поэтому мы предлагаем вам создать собственный набор стикеров и "
-                "поздравить коллег и друзей с праздником! "
-                "Это легко: просто перейдите на сайт и создайте свой стикерпак!",
-                reply_markup=types.InlineKeyboardMarkup(
-                    inline_keyboard=[
-                        [
-                            types.InlineKeyboardButton(
-                                text="Перейти",
-                                url="https://vps-retailday.socialcraft.ru/",
-                            ),
-                        ],
-                    ],
-                ),
-            )
-            return
 
         requests_data[command.args].user_id = message.from_user.id
         requests_data.commit()
