@@ -8,7 +8,7 @@ STATIC_DIR = PROJECT_ROOT / "static"
 dotenv.load_dotenv(PROJECT_ROOT / ".env", verbose=True)
 
 STICKER_BOT_TOKEN: str = os.getenv("STICKER_BOT_TOKEN", "")
-STICKER_BOT_NAME: str = os.getenv("STICKER_BOT_NAME", "botter_forther_bot")
+STICKER_BOT_NAME: str = os.getenv("STICKER_BOT_NAME", "")
 ADMIN_TGS: list[int] = list(map(int, os.getenv("ADMIN_TGS", "259966720").split(",")))
 WEBHOOK_HOST: str = os.getenv(
     "WEBHOOK_HOST",

@@ -2,7 +2,7 @@ import io
 
 from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
-from aiogram.types import BufferedInputFile
+from aiogram.types import BufferedInputFile, StickerSet
 from PIL import Image
 
 from src import config
@@ -23,7 +23,7 @@ def create_sticker(sticker: schemas.StickerParams):
     return contents
 
 
-async def load_stickerpack_to_telegram(
+async def create_stickerpack(
     data: schemas.StickerPackRequest,
     user_id: int,
     bot: Bot,
@@ -49,11 +49,26 @@ async def load_stickerpack_to_telegram(
             filename=f"{token_no_underlines}_0.png",
         ),
     )
+
+    stickerset = await bot.get_sticker_set(
+        set_name,
+    )
+    return stickerset
+
+
+async def add_stickers_to_stickerpack(
+    data: schemas.StickerPackRequest,
+    user_id: int,
+    bot: Bot,
+    stickerset: StickerSet,
+):
+    token_no_underlines = str(data.token).replace("-", "")
+
     idx = 1
     for sticker in data.stickers[1:]:
         await bot.add_sticker_to_set(
             user_id,
-            set_name,
+            stickerset.name,
             "\U0001F381",
             png_sticker=BufferedInputFile(
                 create_sticker(sticker),
@@ -61,7 +76,3 @@ async def load_stickerpack_to_telegram(
             ),
         )
         idx += 1
-    stickerset = await bot.get_sticker_set(
-        set_name,
-    )
-    return stickerset

@@ -41,3 +41,6 @@ allow_untyped_decorators = true
 disallow_subclassing_any = false
 implicit_reexport = true
 exclude = ["venv", ".cache", "test_[a-z_]*.py", "conftest.py", "migrations", "fixtures.py"]
+
+[tool.black]
+line-length = 110
