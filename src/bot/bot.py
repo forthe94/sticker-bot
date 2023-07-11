@@ -106,7 +106,7 @@ async def start(message: types.Message, command: CommandObject) -> None:
                 [
                     types.InlineKeyboardButton(
                         text="Открыть набор стикеров",
-                        url="t.me/addstickers/{stickerset.name}",
+                        url=f"t.me/addstickers/{stickerset.name}",
                     ),
                 ],
             ],
