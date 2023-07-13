@@ -2,6 +2,7 @@ import os
 
 from aiogram import types
 from fastapi import APIRouter, FastAPI
+from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from src import config
@@ -13,6 +14,8 @@ app = FastAPI(title="Stickerpack API", docs_url="/api/v1/docs")
 
 app.middleware("HTTP")(log_errors_to_tg)
 router = APIRouter(prefix="/api/v1", tags=["api_v1"])
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.on_event("startup")
@@ -79,6 +82,11 @@ async def sticker_pack_request(
         errors=errors,
     )
     return resp
+
+
+@router.get("/show_files")
+async def show_files() -> list[str]:
+    return [f for f in os.listdir(config.STATIC_DIR)]
 
 
 @app.get("/")
