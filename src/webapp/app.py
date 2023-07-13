@@ -85,8 +85,12 @@ async def sticker_pack_request(
 
 
 @router.get("/show_files")
-async def show_files() -> list[str]:
-    return [f for f in os.listdir(config.STATIC_DIR)]
+async def show_files() -> dict[str, list[str]]:
+    ret = {}
+    dirs = ("background", "emoji", "label")
+    for dir in dirs:
+        ret[dir] = [f for f in os.listdir(config.STATIC_DIR / dir)]
+    return ret
 
 
 @app.get("/")

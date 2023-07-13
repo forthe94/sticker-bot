@@ -23,3 +23,4 @@ profile.*
 *.db
 data/*
 data
+static
