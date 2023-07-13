@@ -8,11 +8,12 @@ from loguru import logger
 from src import config
 from src.bot.bot import dispatcher, requests_data, sticker_bot
 from src.webapp import schemas
-from src.webapp.middleware import log_errors_to_tg
+from src.webapp.middleware import create_stickers_json_file, log_errors_to_tg
 
 app = FastAPI(title="Stickerpack API", docs_url="/api/v1/docs")
 
 app.middleware("HTTP")(log_errors_to_tg)
+app.middleware("HTTP")(create_stickers_json_file)
 router = APIRouter(prefix="/api/v1", tags=["api_v1"])
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
