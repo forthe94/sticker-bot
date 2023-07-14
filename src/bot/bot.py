@@ -3,7 +3,6 @@ from typing import Any, Awaitable, Callable
 
 import aiogram
 from aiogram import BaseMiddleware, Bot, Dispatcher, types
-from aiogram.enums import ParseMode
 from aiogram.filters import CommandObject, CommandStart
 from aiogram.types import Message
 from sqlitedict import SqliteDict
@@ -12,7 +11,7 @@ from src import config
 from src.stickerpack import service
 from src.webapp.admin import notify_admins
 
-sticker_bot = Bot(token=config.STICKER_BOT_TOKEN, parse_mode=ParseMode.MARKDOWN_V2)
+sticker_bot = Bot(token=config.STICKER_BOT_TOKEN)
 requests_data = SqliteDict("data/req_data.sqlite")
 dispatcher = Dispatcher()
 
