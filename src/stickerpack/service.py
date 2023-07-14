@@ -12,9 +12,12 @@ from src.webapp import schemas
 def create_sticker(sticker: schemas.StickerParams):
     background = Image.open(config.STATIC_DIR / sticker.background_img, "r")
     background = background.convert("RGBA")
+    background = background.resize((512, 512), Image.Resampling.LANCZOS)
     for image_file in sticker.images:
         image = Image.open(config.STATIC_DIR / image_file, "r")
         image = image.convert("RGBA")
+        image = image.resize((512, 512), Image.Resampling.LANCZOS)
+
         background = Image.alpha_composite(background, image)
 
     with io.BytesIO() as output:
