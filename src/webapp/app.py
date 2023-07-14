@@ -55,11 +55,10 @@ async def sticker_pack_request(
     requests_data.commit()
 
     errors = []
-    static_files_on_server = os.listdir(config.STATIC_DIR)
     logger.info("New stickerpack request {}", token)
     for sticker in data.stickers:
         for image in sticker.images + [sticker.background_img]:
-            if image not in static_files_on_server:
+            if not os.path.isfile(config.STATIC_DIR / image):
                 errors.append(
                     schemas.ImageNotFoundError(
                         description=image,
