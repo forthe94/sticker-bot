@@ -3,6 +3,7 @@ from typing import Any, Awaitable, Callable
 
 import aiogram
 from aiogram import BaseMiddleware, Bot, Dispatcher, types
+from aiogram.enums import ParseMode
 from aiogram.filters import CommandObject, CommandStart
 from aiogram.types import Message
 from sqlitedict import SqliteDict
@@ -11,7 +12,7 @@ from src import config
 from src.stickerpack import service
 from src.webapp.admin import notify_admins
 
-sticker_bot = Bot(token=config.STICKER_BOT_TOKEN)
+sticker_bot = Bot(token=config.STICKER_BOT_TOKEN, parse_mode=ParseMode.MARKDOWN_V2)
 requests_data = SqliteDict("data/req_data.sqlite")
 dispatcher = Dispatcher()
 
@@ -41,9 +42,9 @@ async def start(message: types.Message, command: CommandObject) -> None:
     try:
         if command.args is None:
             await message.answer(
-                "Этот праздник очень важен для сотрудников ритейла, поэтому мы&nbsp;предлагаем вам "
-		        "создать собственный набор стикеров и&nbsp;поздравить коллег и&nbsp;друзей с&nbsp;праздником! " 
-		        "Это легко: просто перейдите на&nbsp;сайт и&nbsp;создайте свой стикерпак!",
+                "Этот праздник очень важен для сотрудников ритейла, поэтому мы\U00002009предлагаем вам "
+                "создать собственный набор стикеров и\U00002009поздравить коллег и\U00002009друзей с\U00002009праздником! "
+                "Это легко: просто перейдите на\U00002009сайт и\U00002009создайте свой стикерпак!",
                 reply_markup=types.InlineKeyboardMarkup(
                     inline_keyboard=[
                         [
@@ -88,8 +89,8 @@ async def start(message: types.Message, command: CommandObject) -> None:
             return
 
         await message.answer(
-            "Ваш набор стикеров уже создан, но&nbsp;нужно подождать ещё совсем немного, "
-            "и&nbsp;вашим близким будет приятно ваше внимание 🔥",
+            "Ваш набор стикеров уже создан, но\U00002009нужно подождать ещё совсем немного, "
+            "и\U00002009вашим близким будет приятно ваше внимание 🔥",
         )
 
         requests_data[command.args].user_id = message.from_user.id
@@ -114,7 +115,19 @@ async def start(message: types.Message, command: CommandObject) -> None:
             stickerset.stickers[0].file_id,
             reply_markup=keyboard,
         )
-
+        await message.answer(
+            text="А еще у нас есть классный канал про работу и жизнь в X5. Подписывайся",
+            reply_markup=types.InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        types.InlineKeyboardButton(
+                            text="Подписаться",
+                            url="https://t.me/insiderx5",
+                        ),
+                    ],
+                ],
+            ),
+        )
         await service.add_stickers_to_stickerpack(
             requests_data[command.args].data,
             message.from_user.id,
@@ -130,9 +143,9 @@ async def start(message: types.Message, command: CommandObject) -> None:
 @dispatcher.message()
 async def any(message: types.Message):
     await message.answer(
-        "Этот праздник очень важен для сотрудников ритейла, поэтому мы&nbsp;предлагаем вам "
-		"создать собственный набор стикеров и&nbsp;поздравить коллег и&nbsp;друзей с&nbsp;праздником! " 
-		"Это легко: просто перейдите на&nbsp;сайт и&nbsp;создайте свой стикерпак!",
+        "Этот праздник очень важен для сотрудников ритейла, поэтому мы\U00002009предлагаем вам "
+        "создать собственный набор стикеров и\U00002009поздравить коллег и\U00002009друзей с\U00002009праздником! "
+        "Это легко: просто перейдите на\U00002009сайт и\U00002009создайте свой стикерпак!",
         reply_markup=types.InlineKeyboardMarkup(
             inline_keyboard=[
                 [
