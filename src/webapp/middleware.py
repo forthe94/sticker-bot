@@ -13,19 +13,21 @@ def generate_sticker_json_file() -> None:
     js_stickers = "window.stickers = {\n"
     js_stickers += "    image: [\n"
     for bg_im in os.listdir(config.STATIC_DIR / "background"):
-        js_stickers += " " * 8 + config.WEBHOOK_HOST
-        js_stickers += "/static/background/" + bg_im + "\n"
+        js_stickers += " " * 8 + "{ src: '" + config.WEBHOOK_HOST
+        js_stickers += "/static/background/" + bg_im + "' },\n"
     js_stickers += "],\n\n"
 
     js_stickers += "    emoji: [\n"
     for emoji in os.listdir(config.STATIC_DIR / "emoji"):
-        js_stickers += " " * 8 + config.WEBHOOK_HOST + "/static/emoji/" + emoji + "\n"
-
+        if not "sm" in emoji:
+            js_stickers += " " * 8 + "{ src: '" + config.WEBHOOK_HOST + "/static/emoji/" + emoji + "',\n" + " " * 10 + "small: '" + config.WEBHOOK_HOST + "/static/emoji/" + emoji.replace(".png", "-sm.png") + "' },\n"
+			
     js_stickers += "],\n\n"
 
     js_stickers += "    label: [\n"
     for label in os.listdir(config.STATIC_DIR / "label"):
-        js_stickers += " " * 8 + config.WEBHOOK_HOST + "/static/label/" + label + "\n"
+        if not "sm" in label:
+            js_stickers += " " * 8 + "{ src: '" + config.WEBHOOK_HOST + "/static/label/" + label + "',\n" + " " * 10 + "small: '" + config.WEBHOOK_HOST + "/static/label/" + label.replace(".png", "-sm.png") + "' },\n"
 
     js_stickers += "]\n}"
 

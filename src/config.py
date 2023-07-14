@@ -20,4 +20,4 @@ WEBHOOK_URL = WEBHOOK_HOST + WEBHOOK_PATH
 BOT_TOKENS: list[str] = list(os.getenv("BOT_TOKENS", "").split(","))
 
 
-STICKER_JSON_PATH = "/static/stickers.js"
+STICKER_JSON_PATH = "/static/js/stickers.js"
