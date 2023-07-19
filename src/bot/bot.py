@@ -137,8 +137,7 @@ async def start(message: types.Message, command: CommandObject) -> None:
     except Exception:
         await message.answer("Ой, что-то пошло не так \U0001F61E")
         raise
-    finally:
-        await message.delete()
+
 
 
 @dispatcher.message()

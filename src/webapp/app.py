@@ -43,7 +43,7 @@ async def sticker_pack_request(
     data: schemas.StickerPackRequest,
 ) -> schemas.StickerPackResponse:
     token = data.token
-    deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+    deeplink = f"tg://resolve?domain={config.STICKER_BOT_NAME}&start={token}"
     if str(token) in requests_data:
         return schemas.StickerPackResponse(
             success=True,
@@ -69,7 +69,8 @@ async def sticker_pack_request(
         deeplink = None
     else:
         success = True
-        deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+        # deeplink = f"https://t.me/{config.STICKER_BOT_NAME}?start={token}"
+        deeplink = f"tg://resolve?domain={config.STICKER_BOT_NAME}&start={token}"
     logger.info(
         "Response success:{}, deeplink:{}, errors:{}",
         success,
